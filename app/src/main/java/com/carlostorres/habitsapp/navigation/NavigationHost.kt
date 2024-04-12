@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlostorres.habitsapp.authentication.presentation.login.LoginScreen
+import com.carlostorres.habitsapp.authentication.presentation.signup.SignupScreen
 import com.carlostorres.habitsapp.onboarding.presentation.OnboardingScreen
 
 @Composable
@@ -45,7 +46,17 @@ fun NavigationHost(
         }
 
         composable(NavigationRoutes.Signup.route) {
-            Text("SignUp SCREEN")
+            SignupScreen(
+                onSignIn = {
+                    navController.navigate(NavigationRoutes.Home.route, builder = {
+                        popUpTo(navController.graph.id){
+                            inclusive = true
+                        }
+                    })
+                },
+                onLogin = {
+                    navController.popBackStack()
+                })
         }
 
     }

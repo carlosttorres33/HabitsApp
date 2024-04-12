@@ -8,6 +8,4 @@ sealed interface LoginEvents {
 
     object Login : LoginEvents
 
-    object SignUp : LoginEvents
-
 }

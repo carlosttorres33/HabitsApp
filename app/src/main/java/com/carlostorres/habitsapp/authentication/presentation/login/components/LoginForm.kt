@@ -39,6 +39,7 @@ import com.carlostorres.habitsapp.core.presentation.HabitTextfield
 fun LoginForm(
     state : LoginState,
     onEvent : (LoginEvents) -> Unit,
+    onSignup : () -> Unit,
     modifier: Modifier = Modifier
 ){
 
@@ -142,9 +143,7 @@ fun LoginForm(
             }
 
             TextButton(
-                onClick = {
-                    onEvent(LoginEvents.SignUp)
-                }
+                onClick = onSignup
             ) {
 
                 Text(
