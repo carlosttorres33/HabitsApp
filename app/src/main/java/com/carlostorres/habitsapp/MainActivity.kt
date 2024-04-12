@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.carlostorres.habitsapp.navigation.NavigationHost
+import com.carlostorres.habitsapp.navigation.NavigationRoutes
 import com.carlostorres.habitsapp.ui.theme.HabitsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +27,12 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    Text("Hola")
+                    val navController = rememberNavController()
+
+                    NavigationHost(
+                        navController = navController,
+                        startDestination = NavigationRoutes.Onboarding
+                    )
 
                 }
             }
