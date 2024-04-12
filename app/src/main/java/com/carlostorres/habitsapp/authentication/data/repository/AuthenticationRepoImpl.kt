@@ -26,4 +26,8 @@ class AuthenticationRepoImpl: AuthenticationRepository {
         }
     }
 
+    override fun getUserId(): String? {
+        return Firebase.auth.currentUser?.uid
+    }
+
 }

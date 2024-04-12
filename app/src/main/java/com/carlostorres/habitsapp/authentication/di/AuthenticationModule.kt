@@ -4,6 +4,7 @@ import com.carlostorres.habitsapp.authentication.data.matcher.EmailMtcherImpl
 import com.carlostorres.habitsapp.authentication.data.repository.AuthenticationRepoImpl
 import com.carlostorres.habitsapp.authentication.domain.matcher.EmailMatcher
 import com.carlostorres.habitsapp.authentication.domain.repository.AuthenticationRepository
+import com.carlostorres.habitsapp.authentication.domain.usecase.GetUseIdUseCase
 import com.carlostorres.habitsapp.authentication.domain.usecase.LoginUseCases
 import com.carlostorres.habitsapp.authentication.domain.usecase.LoginWithEmailUseCase
 import com.carlostorres.habitsapp.authentication.domain.usecase.SignupUseCases
@@ -53,6 +54,16 @@ object AuthenticationModule {
             validatePasswordUseCase = ValidatePasswordUseCase(),
             validateEmailUseCase =  ValidateEmailUseCase(emailMatcher)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserIdUseCase(
+        repository: AuthenticationRepository
+    ): GetUseIdUseCase{
+        
+        return GetUseIdUseCase(repository)
+        
     }
 
 }
