@@ -5,14 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlostorres.habitsapp.authentication.domain.repository.AuthenticationRepository
+import com.carlostorres.habitsapp.authentication.domain.usecase.LoginUseCases
+import com.carlostorres.habitsapp.authentication.domain.usecase.PasswordResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authenticationRepository: AuthenticationRepository
+    private val loginUseCases: LoginUseCases
 ) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
@@ -43,13 +44,37 @@ class LoginViewModel @Inject constructor(
 
     private fun login(){
 
-        viewModelScope.launch {
-            authenticationRepository.login(state.email, state.password).onSuccess {
-                println("Chi")
-            }.onFailure {
-                val error = it.message
-                println(error)
+        state = state.copy(
+            emailError = null,
+            passwordError = null
+        )
+
+        if (!loginUseCases.validateEmailUseCase(state.email)){
+            state = state.copy(emailError = "Invalid Email")
+        }
+
+        val passwordError = loginUseCases.validatePasswordUseCase(state.password)
+        if (passwordError is PasswordResult.Invalid){
+            state = state.copy(passwordError = passwordError.errorMessage)
+        }
+
+        if (state.emailError == null && state.passwordError == null){
+
+            state = state.copy(isLoading = true)
+
+            viewModelScope.launch {
+                loginUseCases.loginWithEmailUseCase(state.email, state.password).onSuccess {
+                    state = state.copy(
+                        isLoggedIn = true
+                    )
+                }.onFailure {
+                    state = state.copy(
+                        passwordError = it.message
+                    )
+                }
+                state = state.copy(isLoading = false)
             }
+
         }
 
     }

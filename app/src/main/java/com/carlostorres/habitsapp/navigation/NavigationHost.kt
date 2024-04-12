@@ -2,7 +2,6 @@ package com.carlostorres.habitsapp.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,7 +29,23 @@ fun NavigationHost(
         }
 
         composable(NavigationRoutes.Login.route) {
-            LoginScreen()
+            LoginScreen(
+                onLogin = {
+                    navController.popBackStack()
+                    navController.navigate(NavigationRoutes.Home.route)
+                },
+                onSignUp = {
+                    navController.navigate(NavigationRoutes.Signup.route)
+                }
+            )
+        }
+
+        composable(NavigationRoutes.Home.route) {
+            Text("HOME SCREEN")
+        }
+
+        composable(NavigationRoutes.Signup.route) {
+            Text("SignUp SCREEN")
         }
 
     }
