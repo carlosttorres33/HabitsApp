@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.carlostorres.habitsapp" />
+                  <option name="mobileSdkAppId" value="1:910391859888:android:a0d8d44259b3c4f04cb975" />
+                  <option name="projectId" value="dailyhabitsapp-5f784" />
+                  <option name="projectNumber" value="910391859888" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910391859888",
+    "project_id": "dailyhabitsapp-5f784",
+    "storage_bucket": "dailyhabitsapp-5f784.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910391859888:android:a0d8d44259b3c4f04cb975",
+        "android_client_info": {
+          "package_name": "com.carlostorres.habitsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFs6N1zRwofPj34ntfRjHzLmTNZzk2zFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

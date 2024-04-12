@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.carlostorres.habitsapp.authentication.presentation.login.LoginScreen
 import com.carlostorres.habitsapp.onboarding.presentation.OnboardingScreen
 
 @Composable
@@ -29,7 +30,7 @@ fun NavigationHost(
         }
 
         composable(NavigationRoutes.Login.route) {
-            Text("Pantalla Login")
+            LoginScreen()
         }
 
     }

@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 fun HabitButton(
     text : String,
     modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
     onClick : () -> Unit
 ){
 
