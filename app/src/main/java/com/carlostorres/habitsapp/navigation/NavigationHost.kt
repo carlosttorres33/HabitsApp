@@ -6,6 +6,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.carlostorres.habitsapp.onboarding.presentation.OnboardingScreen
 
 @Composable
 fun NavigationHost(
@@ -19,7 +20,9 @@ fun NavigationHost(
     ){
 
         composable(NavigationRoutes.Onboarding.route){
-            Text("Onboarding")
+            OnboardingScreen(onFinish = {
+                println("FinishOnboarding")
+            })
         }
 
     }
