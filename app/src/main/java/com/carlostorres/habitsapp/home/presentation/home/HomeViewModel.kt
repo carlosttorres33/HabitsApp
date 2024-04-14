@@ -4,14 +4,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.carlostorres.habitsapp.home.domain.home.usecase.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val homeUseCases: HomeUseCases
+) : ViewModel() {
 
     var state by mutableStateOf(HomeState())
         private set
+
+    init {
+        getHabits()
+    }
 
     fun onEvent(event : HomeEvent){
         when(event){
@@ -21,12 +31,28 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                     selectedDate = event.date
                 )
 
+                getHabits()
+
             }
             is HomeEvent.CompleteHabits -> {
+
+                viewModelScope.launch {
+                    homeUseCases.completeHabitUseCase(event.habit, state.selectedDate)
+                }
 
             }
         }
 
+    }
+
+    private fun getHabits(){
+        viewModelScope.launch {
+            homeUseCases.getHabitsForDateUseCase(state.selectedDate).collectLatest {
+                state = state.copy(
+                    habits = it
+                )
+            }
+        }
     }
 
 }
