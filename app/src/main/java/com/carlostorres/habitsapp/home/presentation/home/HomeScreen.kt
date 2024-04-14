@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.habitsapp.R
 import com.carlostorres.habitsapp.home.presentation.home.components.HomeDateSelector
 import com.carlostorres.habitsapp.home.presentation.home.components.HomeQuote
@@ -30,7 +31,11 @@ import java.time.ZonedDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    viewModel : HomeViewModel = hiltViewModel()
+){
+
+    val state = viewModel.state
 
     Scaffold (
         modifier = Modifier.fillMaxSize(),
@@ -60,7 +65,12 @@ fun HomeScreen(){
         }
     ){ paddingValues ->
 
-        Column(modifier = Modifier.padding(paddingValues).padding(20.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(19.dp)
+        ) {
 
             HomeQuote(
                 quote = "WE FIRST MAKE OUR HABITS AND THEN OUR HABITS MAKE US.",
@@ -83,9 +93,11 @@ fun HomeScreen(){
                 Spacer(modifier = Modifier.width(16.dp))
 
                 HomeDateSelector(
-                    selectedDate = ZonedDateTime.now(),
-                    mainDate = ZonedDateTime.now(),
-                    onDateClick = {}
+                    selectedDate = state.selectedDate,
+                    mainDate = state.currentDate,
+                    onDateClick = {
+                        viewModel.onEvent(HomeEvent.ChangeDate(it))
+                    }
                 )
 
             }
