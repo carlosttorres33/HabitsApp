@@ -1,12 +1,12 @@
 package com.carlostorres.habitsapp.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlostorres.habitsapp.authentication.presentation.login.LoginScreen
 import com.carlostorres.habitsapp.authentication.presentation.signup.SignupScreen
+import com.carlostorres.habitsapp.home.presentation.detail.DetailScreen
 import com.carlostorres.habitsapp.home.presentation.home.HomeScreen
 import com.carlostorres.habitsapp.onboarding.presentation.OnboardingScreen
 
@@ -43,7 +43,14 @@ fun NavigationHost(
         }
 
         composable(NavigationRoutes.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onNewHabit = {
+                     navController.navigate(NavigationRoutes.Detail.route)
+                },
+                onSettings = {
+                    navController.navigate(NavigationRoutes.Settings.route)
+                }
+            )
         }
 
         composable(NavigationRoutes.Signup.route) {
@@ -58,6 +65,17 @@ fun NavigationHost(
                 onLogin = {
                     navController.popBackStack()
                 })
+        }
+
+        composable(NavigationRoutes.Detail.route){
+            DetailScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onSave = {
+                    navController.popBackStack()
+                }
+            )
         }
 
     }

@@ -9,4 +9,8 @@ sealed class NavigationRoutes(val route : String) {
 
     object Signup : NavigationRoutes("Signup")
 
+    object Detail : NavigationRoutes("Detail")
+
+    object Settings : NavigationRoutes("Settings")
+
 }
