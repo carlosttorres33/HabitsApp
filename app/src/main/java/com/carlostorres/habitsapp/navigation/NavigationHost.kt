@@ -2,8 +2,10 @@ package com.carlostorres.habitsapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.carlostorres.habitsapp.authentication.presentation.login.LoginScreen
 import com.carlostorres.habitsapp.authentication.presentation.signup.SignupScreen
 import com.carlostorres.habitsapp.home.presentation.detail.DetailScreen
@@ -42,22 +44,11 @@ fun NavigationHost(
             )
         }
 
-        composable(NavigationRoutes.Home.route) {
-            HomeScreen(
-                onNewHabit = {
-                     navController.navigate(NavigationRoutes.Detail.route)
-                },
-                onSettings = {
-                    navController.navigate(NavigationRoutes.Settings.route)
-                }
-            )
-        }
-
         composable(NavigationRoutes.Signup.route) {
             SignupScreen(
                 onSignIn = {
                     navController.navigate(NavigationRoutes.Home.route, builder = {
-                        popUpTo(navController.graph.id){
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     })
@@ -67,7 +58,30 @@ fun NavigationHost(
                 })
         }
 
-        composable(NavigationRoutes.Detail.route){
+        composable(NavigationRoutes.Home.route) {
+            HomeScreen(
+                onNewHabit = {
+                    navController.navigate(NavigationRoutes.Detail.route)
+                },
+                onSettings = {
+                    navController.navigate(NavigationRoutes.Settings.route)
+                },
+                onEditHabit = {
+                    navController.navigate(NavigationRoutes.Detail.route + "?habitId=$it")
+                }
+            )
+        }
+
+        composable(
+            route = NavigationRoutes.Detail.route + "?habitId={habitId}",
+            arguments = listOf(
+                navArgument("habitId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
+        ) {
             DetailScreen(
                 onBack = {
                     navController.popBackStack()

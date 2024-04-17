@@ -39,6 +39,7 @@ import com.carlostorres.habitsapp.home.presentation.home.components.HomeQuote
 fun HomeScreen(
     onNewHabit : () -> Unit,
     onSettings : () -> Unit,
+    onEditHabit : (String) -> Unit,
     viewModel : HomeViewModel = hiltViewModel()
 ){
 
@@ -143,7 +144,9 @@ fun HomeScreen(
                     onCheckedChange = {
                         viewModel.onEvent(HomeEvent.CompleteHabits(habit))
                     },
-                    onHabitClick = {}
+                    onHabitClick = {
+                        onEditHabit(habit.id)
+                    }
                 )
             }
 

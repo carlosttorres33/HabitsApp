@@ -1,6 +1,9 @@
 package com.carlostorres.habitsapp.home.di
 
 import com.carlostorres.habitsapp.home.data.repository.HomeRepoImpl
+import com.carlostorres.habitsapp.home.domain.detail.usecase.DetailUseCases
+import com.carlostorres.habitsapp.home.domain.detail.usecase.GetHabitByIdUseCase
+import com.carlostorres.habitsapp.home.domain.detail.usecase.InsertHabitUseCase
 import com.carlostorres.habitsapp.home.domain.home.usecase.CompleteHabitUseCase
 import com.carlostorres.habitsapp.home.domain.home.usecase.GetHabitsForDateUseCase
 import com.carlostorres.habitsapp.home.domain.home.usecase.HomeUseCases
@@ -26,6 +29,19 @@ object HomeModule {
             getHabitsForDateUseCase = GetHabitsForDateUseCase(repository)
         )
         
+    }
+
+    @Provides
+    @Singleton
+    fun providesDetailUseCases(
+        repository: HomeRepository
+    ): DetailUseCases{
+
+        return DetailUseCases(
+            getHabitByIdUseCase = GetHabitByIdUseCase(repository),
+            insertHabitUseCase = InsertHabitUseCase(repository)
+        )
+
     }
 
     @Provides
