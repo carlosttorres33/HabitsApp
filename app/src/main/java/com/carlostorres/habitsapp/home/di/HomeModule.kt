@@ -1,5 +1,11 @@
 package com.carlostorres.habitsapp.home.di
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.carlostorres.habitsapp.home.data.local.HabitDao
+import com.carlostorres.habitsapp.home.data.local.HabitDataBase
+import com.carlostorres.habitsapp.home.data.local.typeconverter.HomeTypeConverter
 import com.carlostorres.habitsapp.home.data.repository.HomeRepoImpl
 import com.carlostorres.habitsapp.home.domain.detail.usecase.DetailUseCases
 import com.carlostorres.habitsapp.home.domain.detail.usecase.GetHabitByIdUseCase
@@ -8,9 +14,11 @@ import com.carlostorres.habitsapp.home.domain.home.usecase.CompleteHabitUseCase
 import com.carlostorres.habitsapp.home.domain.home.usecase.GetHabitsForDateUseCase
 import com.carlostorres.habitsapp.home.domain.home.usecase.HomeUseCases
 import com.carlostorres.habitsapp.home.domain.repository.HomeRepository
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -46,12 +54,28 @@ object HomeModule {
 
     @Provides
     @Singleton
-    fun providesHomeRepository(
+    fun provideHabitDao(
+        @ApplicationContext context: Context,
+        moshi: Moshi
+    ): HabitDao{
 
-    ): HomeRepository{
-
-        return HomeRepoImpl()
+        return Room.databaseBuilder(
+            context,
+            HabitDataBase::class.java,
+            "habits_db"
+        ).addTypeConverter(HomeTypeConverter(moshi)).build().dao
 
     }
+
+    @Provides
+    @Singleton
+    fun providesHomeRepository(
+        dao: HabitDao
+    ): HomeRepository = HomeRepoImpl(dao)
+    
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi = Moshi.Builder().build()
+
 
 }
