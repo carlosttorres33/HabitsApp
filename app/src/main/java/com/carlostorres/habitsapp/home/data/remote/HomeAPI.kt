@@ -2,6 +2,7 @@ package com.carlostorres.habitsapp.home.data.remote
 
 import com.carlostorres.habitsapp.home.data.remote.dto.HabitDto
 import com.carlostorres.habitsapp.home.data.remote.dto.HabitResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 
@@ -17,6 +18,6 @@ interface HomeAPI {
     suspend fun getAllHabits():HabitResponse
 
     @PATCH("habits.json")
-    suspend fun insertHabit(habit: HabitDto)
+    suspend fun insertHabit(@Body habit: HabitResponse)
 
 }

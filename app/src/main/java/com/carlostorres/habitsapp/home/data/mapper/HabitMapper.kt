@@ -53,7 +53,7 @@ fun HabitResponse.toDomain(): List<Habit>{
 
 }
 
-fun Habit.toDto(): HabitDto {
+fun Habit.toDto(): HabitResponse {
 
     val dto = HabitDto(
         name = this.name,
@@ -63,6 +63,6 @@ fun Habit.toDto(): HabitDto {
         startDate = this.startDate.toStartOfDayTimestamp()
     )
 
-    return dto
+    return mapOf(id to dto)
 
 }
